@@ -60,6 +60,7 @@ try {
       credential: admin.credential.cert(serviceAccount),
       storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
     });
+    admin.firestore().settings({ ignoreUndefinedProperties: true });
     isFirebaseAdminInitialized = true;
     console.log('Firebase Admin SDK initialized successfully via Service Account JSON.');
   } else if (process.env.GOOGLE_APPLICATION_CREDENTIALS) {
@@ -68,6 +69,7 @@ try {
       credential: admin.credential.applicationDefault(),
       storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
     });
+    admin.firestore().settings({ ignoreUndefinedProperties: true });
     isFirebaseAdminInitialized = true;
     console.log('Firebase Admin SDK initialized successfully via Application Default Credentials.');
   } else {
