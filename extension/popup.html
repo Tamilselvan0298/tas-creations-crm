@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      width: 280px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      margin: 0;
+      padding: 12px;
+      background-color: #040d1a;
+      color: #e2e8f0;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-b: 1px solid #1e293b;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+    }
+    .logo {
+      font-weight: 800;
+      font-size: 13px;
+      color: #D4AF37;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .card {
+      background: #0b1524;
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      padding: 10px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-size: 9px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #94a3b8;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+    .field {
+      font-size: 11px;
+      margin-bottom: 4px;
+    }
+    .field span {
+      color: #94a3b8;
+      font-weight: 600;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      background: #D4AF37;
+      color: #040d1a;
+      border: none;
+      border-radius: 8px;
+      padding: 7px;
+      font-weight: 700;
+      font-size: 11px;
+      cursor: pointer;
+      text-align: center;
+      margin-top: 6px;
+    }
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid #D4AF37;
+      color: #D4AF37;
+      margin-top: 4px;
+    }
+    .status {
+      font-size: 10px;
+      color: #10b981;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="logo">TAS CRM Intel</div>
+    <span style="font-size: 9px; color: #94a3b8;">v1.0.0</span>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Lead Scraped Metrics</div>
+    <div id="no-data" style="font-size: 10px; color: #94a3b8;">No data extracted yet. Navigate to Google Maps or client site.</div>
+    <div id="data-fields" style="display: none;">
+      <div class="field"><span>Company:</span> <b id="lead-company">N/A</b></div>
+      <div class="field"><span>Website:</span> <b id="lead-website">N/A</b></div>
+      <div class="field"><span>Phone:</span> <b id="lead-phone">N/A</b></div>
+      <div class="field"><span>Rating:</span> <b id="lead-rating">0.0</b></div>
+      <div class="field"><span>Techs:</span> <b id="lead-tech">None</b></div>
+    </div>
+  </div>
+
+  <button class="btn" id="btn-scrape">Extract Page Elements</button>
+  <button class="btn btn-secondary" id="btn-sync" style="display: none;">Save to CRM Database</button>
+  
+  <div id="sync-status" class="status" style="display: none;">Sync Complete!</div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

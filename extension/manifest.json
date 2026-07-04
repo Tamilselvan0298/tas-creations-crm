@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "TAS Outreach CRM Lead Intelligence",
+  "version": "1.0.0",
+  "description": "One-click Google Maps business scraper, CMS tech stack auditor, and sales proposals generator for TAS CRM.",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "http://localhost:5000/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.google.com/maps/*",
+        "https://*.google.com/maps/*",
+        "https://*/*"
+      ],
+      "js": ["content.js"]
+    }
+  ]
+}

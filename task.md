@@ -1,0 +1,23 @@
+# Task List - Phase 1 Setup
+
+- [x] Project Setup
+  - [x] Initialize Vite React TypeScript project
+  - [x] Install packages (React Router, Tailwind CSS, Lucide React, Framer Motion, TanStack Table, Recharts, Firebase, Zod, React Hook Form)
+  - [x] Configure Tailwind, PostCSS, and TsConfig
+- [x] Database & Auth Foundation
+  - [x] Create Firebase Client service (`firebase.ts`)
+  - [x] Create Authentication Context Provider and `useAuth` hook
+  - [x] Set up route protection (`ProtectedRoute` & `RoleRouteGuard`)
+- [x] Shared Components & Design System
+  - [x] Define colors and dark/light themes
+  - [x] Build shared Card, Button, and Input components
+  - [x] Add global theme toggler
+- [x] Shell & Dashboard UI
+  - [x] Build global layout (Sidebar navigation & Header)
+  - [x] Implement Dashboard page KPI Cards
+  - [x] Integrate charts (Lead Sources, Sales Funnel, Monthly Revenue)
+  - [x] Implement recent activity log & upcoming tasks list
+- [x] Express Server Stub
+  - [x] Setup backend project structure under `/server`
+  - [x] Install backend dependencies
+  - [x] Build auth middleware stub (Firebase JWT verify placeholder)
