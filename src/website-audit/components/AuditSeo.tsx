@@ -111,6 +111,18 @@ export const AuditSeo: React.FC<AuditSeoProps> = ({ report }) => {
             <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Facebook Page</p>
             <p className="font-semibold text-slate-700 dark:text-slate-200 mt-1">{report.business?.socials?.facebook || '—'}</p>
           </div>
+          <div className="text-xs">
+            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">LinkedIn Profile</p>
+            <p className="font-semibold text-slate-700 dark:text-slate-200 mt-1">{report.business?.socials?.linkedin || '—'}</p>
+          </div>
+          <div className="text-xs">
+            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Twitter / X</p>
+            <p className="font-semibold text-slate-700 dark:text-slate-200 mt-1">{report.business?.socials?.twitter || '—'}</p>
+          </div>
+          <div className="text-xs">
+            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">YouTube Channel</p>
+            <p className="font-semibold text-slate-700 dark:text-slate-200 mt-1">{report.business?.socials?.youtube || '—'}</p>
+          </div>
         </div>
       </Card>
 

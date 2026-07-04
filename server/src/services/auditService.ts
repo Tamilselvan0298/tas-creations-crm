@@ -31,7 +31,13 @@ export interface AuditResult {
   business: {
     phone?: string;
     email?: string;
-    socials: { instagram?: string; facebook?: string; linkedin?: string };
+    socials: { 
+      instagram?: string; 
+      facebook?: string; 
+      linkedin?: string;
+      twitter?: string;
+      youtube?: string;
+    };
   };
   aiAnalysis: {
     summary: string;
@@ -173,15 +179,42 @@ class AuditService {
   private parseBusiness(html: string) {
     const mailtoMatch = html.match(/mailto:([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})/i);
     const telMatch = html.match(/tel:(\+?[0-9\s-]{7,15})/i);
+    
+    // Backup general matches if tel/mailto are not found in href tags
+    let email = mailtoMatch ? mailtoMatch[1] : undefined;
+    if (!email) {
+      const emailRegex = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})/i;
+      const generalEmailMatch = html.match(emailRegex);
+      if (generalEmailMatch) {
+        email = generalEmailMatch[1];
+      }
+    }
+
+    let phone = telMatch ? telMatch[1] : undefined;
+    if (!phone) {
+      // Standard US/International phone formats matching digits in HTML body
+      const phoneRegex = /(\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}/;
+      const generalPhoneMatch = html.match(phoneRegex);
+      if (generalPhoneMatch) {
+        phone = generalPhoneMatch[0];
+      }
+    }
+
     const instaMatch = html.match(/instagram\.com\/([a-zA-Z0-9_.-]+)/i);
     const fbMatch = html.match(/facebook\.com\/([a-zA-Z0-9_.-]+)/i);
+    const linkedinMatch = html.match(/linkedin\.com\/(?:company|in)\/([a-zA-Z0-9_.-]+)/i);
+    const twitterMatch = html.match(/(?:twitter\.com|x\.com)\/([a-zA-Z0-9_.-]+)/i);
+    const youtubeMatch = html.match(/youtube\.com\/(?:c\/|user\/|channel\/)?([a-zA-Z0-9_.-]+)/i);
     
     return {
-      phone: telMatch ? telMatch[1] : undefined,
-      email: mailtoMatch ? mailtoMatch[1] : undefined,
+      phone,
+      email,
       socials: {
         instagram: instaMatch ? `@${instaMatch[1]}` : undefined,
         facebook: fbMatch ? fbMatch[1] : undefined,
+        linkedin: linkedinMatch ? linkedinMatch[1] : undefined,
+        twitter: twitterMatch ? `@${twitterMatch[1]}` : undefined,
+        youtube: youtubeMatch ? youtubeMatch[1] : undefined,
       },
     };
   }

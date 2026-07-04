@@ -33,7 +33,13 @@ export interface AuditReport {
   business: {
     phone?: string;
     email?: string;
-    socials: { instagram?: string; facebook?: string; linkedin?: string };
+    socials: { 
+      instagram?: string; 
+      facebook?: string; 
+      linkedin?: string;
+      twitter?: string;
+      youtube?: string;
+    };
   };
   aiAnalysis: {
     summary: string;
