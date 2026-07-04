@@ -4,27 +4,48 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 let isFirebaseAdminInitialized = false;
+let initError: string | null = null;
 
 try {
   // If FIREBASE_SERVICE_ACCOUNT_JSON is set, parse and initialize
   if (process.env.FIREBASE_SERVICE_ACCOUNT_JSON && !process.env.FIREBASE_SERVICE_ACCOUNT_JSON.startsWith('PLACEHOLDER')) {
-    let rawJson = process.env.FIREBASE_SERVICE_ACCOUNT_JSON;
+    const rawJson = process.env.FIREBASE_SERVICE_ACCOUNT_JSON;
+    let serviceAccount: any = null;
     try {
-      // Extract private key block and replace literal newlines with escaped '\n' to prevent JSON.parse syntax failures
-      const keyRegex = /"private_key"\s*:\s*"([\s\S]*?)"/;
-      const match = rawJson.match(keyRegex);
-      if (match && match[1]) {
-        const cleanedKey = match[1].replace(/\r?\n/g, '\\n');
-        rawJson = rawJson.replace(match[1], cleanedKey);
+      serviceAccount = JSON.parse(rawJson);
+    } catch (parseError: any) {
+      console.warn('JSON.parse failed, attempting regex-based fallback extraction...', parseError.message);
+      
+      const extractField = (field: string) => {
+        const regex = new RegExp(`"${field}"\\s*:\\s*"([\\s\\S]*?)"`);
+        const match = rawJson.match(regex);
+        return match ? match[1] : null;
+      };
+
+      const projectId = extractField('project_id');
+      const privateKey = extractField('private_key');
+      const clientEmail = extractField('client_email');
+
+      if (projectId && privateKey && clientEmail) {
+        serviceAccount = {
+          type: 'service_account',
+          project_id: projectId,
+          private_key: privateKey,
+          client_email: clientEmail
+        };
+      } else {
+        // If fallback fails, rethrow the original parsing error
+        throw parseError;
       }
-    } catch (e) {
-      console.warn('Service Account pre-processing warning:', e);
     }
 
-    const serviceAccount = JSON.parse(rawJson);
-    if (serviceAccount.private_key) {
-      serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
+    if (serviceAccount && serviceAccount.private_key) {
+      // Clean up all escaped newlines (\\n) and raw newlines to correct PEM format
+      serviceAccount.private_key = serviceAccount.private_key
+        .replace(/\\n/g, '\n')
+        .replace(/\r?\n/g, '\n');
     }
+
     admin.initializeApp({
       credential: admin.credential.cert(serviceAccount),
       storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
@@ -42,10 +63,12 @@ try {
   } else {
     // Dev fallback
     console.warn('Firebase Service Account credentials not provided. Server running in Mock Auth Validation mode.');
+    initError = 'Credentials not provided in env variables.';
   }
-} catch (error) {
+} catch (error: any) {
   console.error('Error initializing Firebase Admin SDK:', error);
+  initError = error.message || String(error);
 }
 
-export { admin, isFirebaseAdminInitialized };
+export { admin, isFirebaseAdminInitialized, initError };
 export default admin;
