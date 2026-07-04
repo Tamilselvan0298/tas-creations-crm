@@ -1,6 +1,6 @@
 import { Router, Response } from 'express';
 import { authenticateJWT, authorizeRoles, AuthenticatedRequest } from '../middleware/auth';
-import { isFirebaseAdminInitialized, initError } from '../config/firebaseAdmin';
+import { isFirebaseAdminInitialized, initError, parsedKeyStats } from '../config/firebaseAdmin';
 
 const router = Router();
 // Public health check route
@@ -11,6 +11,7 @@ router.get('/health', (_, res: Response) => {
     service: 'TAS Outreach CRM API',
     firebaseAdminInitialized: isFirebaseAdminInitialized,
     firebaseError: initError,
+    parsedKeyStats: parsedKeyStats,
     hasServiceAccountKey: !!process.env.FIREBASE_SERVICE_ACCOUNT_JSON,
     serviceAccountKeyLength: process.env.FIREBASE_SERVICE_ACCOUNT_JSON ? process.env.FIREBASE_SERVICE_ACCOUNT_JSON.length : 0,
     serviceAccountKeyPrefix: process.env.FIREBASE_SERVICE_ACCOUNT_JSON ? process.env.FIREBASE_SERVICE_ACCOUNT_JSON.substring(0, 30) : 'none',

@@ -5,6 +5,7 @@ dotenv.config();
 
 let isFirebaseAdminInitialized = false;
 let initError: string | null = null;
+let parsedKeyStats: any = null;
 
 try {
   // If FIREBASE_SERVICE_ACCOUNT_JSON is set, parse and initialize
@@ -44,6 +45,15 @@ try {
       serviceAccount.private_key = serviceAccount.private_key
         .replace(/\\n/g, '\n')
         .replace(/\r?\n/g, '\n');
+        
+      parsedKeyStats = {
+        length: serviceAccount.private_key.length,
+        newlines: (serviceAccount.private_key.match(/\n/g) || []).length,
+        startsWithHeader: serviceAccount.private_key.startsWith('-----BEGIN PRIVATE KEY-----'),
+        endsWithFooter: serviceAccount.private_key.trim().endsWith('-----END PRIVATE KEY-----'),
+        prefix: serviceAccount.private_key.substring(0, 40),
+        suffix: serviceAccount.private_key.substring(serviceAccount.private_key.length - 40)
+      };
     }
 
     admin.initializeApp({
@@ -70,5 +80,5 @@ try {
   initError = error.message || String(error);
 }
 
-export { admin, isFirebaseAdminInitialized, initError };
+export { admin, isFirebaseAdminInitialized, initError, parsedKeyStats };
 export default admin;
