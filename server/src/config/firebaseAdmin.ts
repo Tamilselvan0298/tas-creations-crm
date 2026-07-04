@@ -8,7 +8,20 @@ let isFirebaseAdminInitialized = false;
 try {
   // If FIREBASE_SERVICE_ACCOUNT_JSON is set, parse and initialize
   if (process.env.FIREBASE_SERVICE_ACCOUNT_JSON && !process.env.FIREBASE_SERVICE_ACCOUNT_JSON.startsWith('PLACEHOLDER')) {
-    const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_JSON);
+    let rawJson = process.env.FIREBASE_SERVICE_ACCOUNT_JSON;
+    try {
+      // Extract private key block and replace literal newlines with escaped '\n' to prevent JSON.parse syntax failures
+      const keyRegex = /"private_key"\s*:\s*"([\s\S]*?)"/;
+      const match = rawJson.match(keyRegex);
+      if (match && match[1]) {
+        const cleanedKey = match[1].replace(/\r?\n/g, '\\n');
+        rawJson = rawJson.replace(match[1], cleanedKey);
+      }
+    } catch (e) {
+      console.warn('Service Account pre-processing warning:', e);
+    }
+
+    const serviceAccount = JSON.parse(rawJson);
     if (serviceAccount.private_key) {
       serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
     }
