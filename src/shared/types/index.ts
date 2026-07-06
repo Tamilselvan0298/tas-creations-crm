@@ -20,6 +20,8 @@ export interface CompanyProfile {
     instagram?: string;
     facebook?: string;
     linkedin?: string;
+    twitter?: string;
+    youtube?: string;
   };
   category?: string;
   address?: {
@@ -38,6 +40,20 @@ export interface CompanyProfile {
   annualRevenue?: number;
   description?: string;
   createdAt: any;
+
+  // Custom enrichment details
+  techStack?: string[];
+  seoScore?: number;
+  localSeoScore?: number;
+  performanceScore?: number;
+  listingClaimed?: boolean;
+  permanentlyClosed?: boolean;
+  temporarilyClosed?: boolean;
+  sitemapExists?: boolean;
+  h1Count?: number;
+  issues?: { type: 'warn' | 'error'; message: string }[];
+  onPageBreakdown?: { onPage: number; technical: number; social: number; content: number };
+  speedMetrics?: { lcp: number; cls: number; tbt: number; inp: number };
 }
 
 export type LeadStatus =
