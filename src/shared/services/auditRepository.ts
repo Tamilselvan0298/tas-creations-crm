@@ -16,6 +16,7 @@ export interface AuditReport {
     seo: number;
     accessibility: number;
     security: number;
+    bestPractices?: number;
   };
   seo: {
     title: string;
@@ -29,6 +30,7 @@ export interface AuditReport {
     cls: number;
     tbt: number;
     pageSizeKb: number;
+    inp?: number;
   };
   business: {
     phone?: string;
@@ -48,6 +50,23 @@ export interface AuditReport {
     salesPitch: string;
     budgetEstimate: string;
   };
+  // Expanded SEO & Status properties
+  localSeoScore?: number;
+  listingClaimed?: boolean;
+  permanentlyClosed?: boolean;
+  temporarilyClosed?: boolean;
+  onPageBreakdown?: {
+    onPage: number;
+    technical: number;
+    social: number;
+    content: number;
+  };
+  sitemapExists?: boolean;
+  h1Count?: number;
+  issues?: {
+    type: 'warn' | 'error';
+    message: string;
+  }[];
   createdAt: string;
 }
 
