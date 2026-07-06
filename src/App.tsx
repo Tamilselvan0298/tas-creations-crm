@@ -13,11 +13,8 @@ import { SalesHub } from './sales';
 import { AiIntelligenceCenter } from './ai';
 import { ExtensionHub } from './extension-hub';
 import { CompaniesList } from './companies';
-import { FeaturePlaceholder } from './shared/components/FeaturePlaceholder';
-import { 
-  CheckSquare,
-  Calendar
-} from 'lucide-react';
+import { TasksList } from './tasks';
+import { MeetingsCalendar } from './meetings';
 import './App.css';
 
 function App() {
@@ -72,26 +69,8 @@ function App() {
             <Route path="companies" element={<CompaniesList />} />
 
             {/* Placeholder routes for next module phases */}
-            <Route 
-              path="tasks" 
-              element={
-                <FeaturePlaceholder 
-                  title="Operational Tasks List" 
-                  description="Create actionable checklists, configure deadline dates, prioritize client jobs, and map task statuses." 
-                  icon={CheckSquare} 
-                />
-              } 
-            />
-            <Route 
-              path="meetings" 
-              element={
-                <FeaturePlaceholder 
-                  title="Calendar & Meetings Planner" 
-                  description="Schedule agency meetings, client demo syncs, set automated reminder triggers, and map calendars." 
-                  icon={Calendar} 
-                />
-              } 
-            />
+            <Route path="tasks" element={<TasksList />} />
+            <Route path="meetings" element={<MeetingsCalendar />} />
             
             {/* Live Profile Settings Screen */}
             <Route path="settings" element={<ProfileSettings />} />
