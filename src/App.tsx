@@ -15,6 +15,7 @@ import { ExtensionHub } from './extension-hub';
 import { CompaniesList } from './companies';
 import { TasksList } from './tasks';
 import { MeetingsCalendar } from './meetings';
+import { WorkflowHub } from './workflows';
 import './App.css';
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
             
             {/* CRM Kanban Opportunity Board */}
             <Route path="crm" element={<KanbanBoard />} />
+            <Route path="workflows" element={<WorkflowHub />} />
 
             {/* Website Intel & SEO Reports */}
             <Route path="website-audit" element={<AuditDashboard />} />

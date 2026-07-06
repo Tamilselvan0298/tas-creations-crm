@@ -22,7 +22,8 @@ import {
   ShieldCheck,
   UserCheck,
   Sparkles,
-  Puzzle
+  Puzzle,
+  GitFork
 } from 'lucide-react';
 
 export const Sidebar: React.FC = () => {
@@ -46,6 +47,7 @@ export const Sidebar: React.FC = () => {
     { name: 'Website Audit', path: '/website-audit', icon: Globe },
     { name: 'SEO Reports', path: '/seo-reports', icon: FileSpreadsheet },
     { name: 'CRM Kanban', path: '/crm', icon: Columns },
+    { name: 'Workflow Hub', path: '/workflows', icon: GitFork },
     { name: 'Tasks', path: '/tasks', icon: CheckSquare },
     { name: 'Meetings', path: '/meetings', icon: Calendar },
     { name: 'Email Campaigns', path: '/email', icon: Mail },
